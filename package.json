@@ -1,0 +1,16 @@
+{
+  "name": "nunjucks_sass_gulp4_start_template",
+  "version": "1.0.0",
+  "description": "Start template for html code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://danil_full_stack@bitbucket.org/danil_full_stack/nunjucks_sass_gulp4_start_template.git"
+  },
+  "author": "Daniel-Savchenko.com",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/danil_full_stack/nunjucks_sass_gulp4_start_template#readme"
+}
