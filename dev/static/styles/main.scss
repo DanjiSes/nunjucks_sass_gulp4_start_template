@@ -1,0 +1,15 @@
+@import "utils/libs";
+@import "utils/vars";
+@import "utils/fonts";
+
+/*
+ * HERE YOUR GLOBAL STYLES
+ */
+html {
+	font-size: 16px;
+}
+
+@import "blocks/_blocks";
+
+// Responsive styles
+@import "utils/media";
