@@ -38,7 +38,8 @@ function html() {
 function css() {
 	return src('dev/static/styles/main.scss')
     .pipe(sass())
-    .pipe(dest('build/static/css'));
+    .pipe(dest('build/static/css'))
+    .pipe(browserSync.stream());
 }
 
 // ------------------------------------------
