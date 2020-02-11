@@ -23,8 +23,8 @@ const del                        = require('del');
 
 function html() {
 
-	return src('dev/html/*.njk')
-		.pipe(nunjucks.compile())
+  return src('dev/html/*.njk')
+    .pipe(nunjucks.compile())
     .pipe(rename({ extname: '.html' }))
     .pipe(dest('build'))
     .on('end', browserSync.reload);
@@ -36,7 +36,8 @@ function html() {
 // ------------------------------------------
 
 function css() {
-	return src('dev/static/styles/main.scss')
+
+  return src('dev/static/styles/main.scss')
     .pipe(sass())
     .pipe(dest('build/static/css'))
     .pipe(browserSync.stream());
@@ -47,20 +48,23 @@ function css() {
 // ------------------------------------------
 
 function jsLibs(cb) {
+
   const libs = [
-    // here paths to JavaScript libs
+    // here libs
   ];
 
   if (!libs.length) return cb();
 
-	return src(libs)
+  return src(libs)
     .pipe(concat('libs.min.js'))
     .pipe(dest('build/static/js'));
 }
 
 function js() {
+
   return src('dev/static/js/*')
-    .pipe(dest('build/static/js'));
+    .pipe(dest('build/static/js'))
+    .on('end', browserSync.reload);;
 }
 
 // ------------------------------------------
@@ -68,8 +72,38 @@ function js() {
 // ------------------------------------------
 
 function images() {
+
   return src('dev/static/images/**/*')
     .pipe(dest('build/static/images'));
+}
+
+// ------------------------------------------
+// Copy needed files
+// ------------------------------------------
+
+function assets() {
+
+  return src('dev/static/assets/**/*')
+    .pipe(dest('build/static'));
+}
+
+function copy(from, to = '') {
+  return src(from).pipe(dest('build/static' + to));
+}
+
+function copyFiles() {
+  return parallel(
+    // copy()
+  );
+}
+
+// ------------------------------------------
+// Fonts
+// ------------------------------------------
+
+function fonts() {
+  return src('dev/static/fonts/*')
+    .pipe(dest('build/static/fonts'));
 }
 
 // ------------------------------------------
@@ -94,9 +128,9 @@ function watchFiles() {
   // styles
   watch('dev/static/styles/**/*', series(css));
   // images
-  watch('dev/static/images/**/*', series(images));
+  watch('dev/static/images/**/*.{png,jpg,gif,svg}', series(images));
   // js
-  watch('dev/static/js/**/*.', series(js));
+  watch('dev/static/js/**/*', series(js));
 }
 
 // clean build folder
@@ -112,4 +146,5 @@ exports.jsLibs        = jsLibs;
 exports.watchFiles    = watchFiles;
 exports.serve         = serve;
 
-exports.default = series(clean, parallel(html, css, js), parallel(watchFiles, serve));
+exports.default       = series(clean, parallel(html, css, js, jsLibs, copy, assets, fonts, images), parallel(serve, watchFiles));
+exports.build         = series(clean, parallel(html, css, js, jsLibs, copy, assets, fonts, images));
