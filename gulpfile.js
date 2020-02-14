@@ -91,9 +91,16 @@ function copy(from, to = '') {
   return src(from).pipe(dest('build/static' + to));
 }
 
-function copyFiles() {
+function copyFiles(cb) {
+
+  const sources = [
+    // { from: '', to: '' }
+  ];
+
+  if (!sources.length) return cb();
+
   return parallel(
-    // copy()
+    sources.map(source => copy(source.from, source.to))
   );
 }
 
@@ -146,5 +153,5 @@ exports.jsLibs        = jsLibs;
 exports.watchFiles    = watchFiles;
 exports.serve         = serve;
 
-exports.default       = series(clean, parallel(html, css, js, jsLibs, copy, assets, fonts, images), parallel(serve, watchFiles));
-exports.build         = series(clean, parallel(html, css, js, jsLibs, copy, assets, fonts, images));
+exports.default       = series(clean, parallel(html, css, js, jsLibs, copyFiles, assets, fonts, images), parallel(serve, watchFiles));
+exports.build         = series(clean, parallel(html, css, js, jsLibs, copyFiles, assets, fonts, images));
