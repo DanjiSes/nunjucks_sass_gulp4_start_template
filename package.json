@@ -8,11 +8,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://danil_full_stack@bitbucket.org/danil_full_stack/nunjucks_sass_gulp4_start_template.git"
+    "url": "git+https://github.com/DanjiSes/nunjucks_sass_gulp4_start_template.git"
   },
   "author": "Daniel-Savchenko.com",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/danil_full_stack/nunjucks_sass_gulp4_start_template#readme",
+  "homepage": "https://savchenko.dev",
   "devDependencies": {
     "browser-sync": "^2.26.14",
     "del": "^6.0.0",
